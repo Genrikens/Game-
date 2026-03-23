@@ -5,7 +5,7 @@ import java.awt.*;
 public class Player {
     private int x,y,w,h,speed,hp;
     private static final Image SHIP = SpriteLoader.load("/player.png");
-//[eq
+//
     public Player(int x, int y, int w, int h) {
         this.x = x;
         this.y = y;

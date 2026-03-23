@@ -2,8 +2,11 @@ package game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class GameFrame extends JPanel {
+
+public class GameFrame extends JPanel implements KeyListener {
     Background background = new Background(0, 0, 480*3, 270*3);
     Upground upground = new Upground(0,0,480*3,270*3);
     Player player = new Player(300,478,16,32);
@@ -32,4 +35,18 @@ public class GameFrame extends JPanel {
 
     }
 
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+
+    }
 }

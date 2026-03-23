@@ -1,10 +1,12 @@
 package game;
 
+
 import java.awt.*;
+
 
 public class Player {
     private int x,y,w,h,speed,hp;
-    private static final Image SHIP = SpriteLoader.load("/player.png");
+    private static final Image player = SpriteLoader.load("/player.png");
 //
     public Player(int x, int y, int w, int h) {
         this.x = x;
@@ -15,8 +17,10 @@ public class Player {
         this.hp = 3;
     }
 
+
+
     public void drawPlayer(Graphics g){
-        g.drawImage(SHIP,x,y,w,h,null);
+        g.drawImage(player,x,y,w,h,null);
 
     }
 

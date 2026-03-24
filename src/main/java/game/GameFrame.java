@@ -1,4 +1,4 @@
-package game;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +16,7 @@ public class GameFrame extends JPanel implements KeyListener {
         new Timer(16, e -> {
 
             repaint();
+
 
         }).start();
     }
@@ -36,17 +37,20 @@ public class GameFrame extends JPanel implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent keyEvent) {
+    public void keyTyped(KeyEvent e) {}
 
+    @Override
+    public void keyPressed(KeyEvent e) {
+        char key = e.getKeyChar();
+        if (key == KeyEvent.VK_LEFT) {
+            player.setX(-10);
+        } else if (key == KeyEvent.VK_RIGHT) {
+            player.setX(+10);
+        }
     }
 
     @Override
-    public void keyPressed(KeyEvent keyEvent) {
+    public void keyReleased(KeyEvent e) {}
 
-    }
 
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
-
-    }
 }

@@ -1,15 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class Menu extends JFrame {
+    private static final Image MenuBackground = SpriteLoader.load("/MenuBackground.png");
     public Menu(){
         setTitle("menu for game");
         setSize(600,700);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         setLayout(new BorderLayout());
+
+
+
+
 
         // PANEL FOR BUTON
         JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -41,11 +45,18 @@ public class Menu extends JFrame {
         add(buttons, BorderLayout.CENTER);
     }
 
-    public void main(String[] args){
+    static class DrawingPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(MenuBackground, 0, 0, 600, 700, null);
+        }
+    }
+    public void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-        new Menu().setVisible(true);
+            new Menu().setVisible(true);
+
         });
     }
-
 
 }

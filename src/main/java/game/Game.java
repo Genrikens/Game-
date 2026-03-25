@@ -11,12 +11,11 @@ public class Game extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(false);
         setResizable(false);
+        requestFocusInWindow(true);
+
 
 
         GameFrame gameFrame = new GameFrame();
         add(gameFrame);
-
-
-
     }
 }

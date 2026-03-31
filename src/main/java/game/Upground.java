@@ -5,7 +5,7 @@ import java.awt.Image;
 
 public class Upground {
     private final int x,y,w,h;
-    private static final Image upgroundPNG = SpriteLoader.load("/upground.png");
+    private static final Image upgroundPNG = SpriteLoader.load("/game/upground.png");
 
 
     public Upground(int x, int y, int w, int h) {

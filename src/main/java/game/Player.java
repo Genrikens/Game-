@@ -4,18 +4,21 @@
 import java.awt.*;
 
 
+
 public class Player {
     boolean run = false, atack = false, block = false;
     private int x,y,w,h,speed,hp;
-    private static final Image player = SpriteLoader.load("/player.png");
-    private static final Image[] player_idle = SpriteLoader.getFrames("/playerIdle.png",16,32,2);
-    private static final Image[] player_run = SpriteLoader.getFrames("/player_run.png",32,32,2);
-    private static final Image[] player_atack = SpriteLoader.getFrames("/player_atack.png",32,32,2);
-    private static final Image[] player_block = SpriteLoader.getFrames("/player_block.png",32,32,2);
+    private static final Image player = SpriteLoader.load("/player/player.png");
+    private static final Image[] player_idle = SpriteLoader.getFrames("/player/player_idle.png",32,32,2);
+    private static final Image[] player_run = SpriteLoader.getFrames("/player/player_run.png",32,32,2);
+    private static final Image[] player_atack = SpriteLoader.getFrames("/player/player_atack.png",32,32,2);
+    private static final Image[] player_block = SpriteLoader.getFrames("/player/player_block.png",32,32,2);
     private int index = 0;
     private int index_count = 2;
     private int animation_speed = 0;
     private int direction = 1;
+    int AtackP;
+
 
     public Player(int x, int y, int w, int h) {
         this.x = x;
@@ -28,38 +31,36 @@ public class Player {
 
 
 
+
     public void drawPlayer(Graphics g){
-        int drawW, drawH;
 
-        if (block) {
-            drawW = 32 * 3;
-            drawH = 32 * 3;
-        } else if (atack) {
-            drawW = 32 * 3;
-            drawH = 32 * 3;
-        } else if (run) {
-            drawW = 48 * 2;
-            drawH = 32 * 3;
-        } else {
-            drawW = 16 * 3;
-            drawH = 32 * 3;
-        }
-
-
+        int imgW = 32 * 3;
+        int drawX = x;
         if (direction == -1) {
-            drawW = -drawW;
-        }
+            AtackP = 50;
+            drawX = x + (imgW - w);
+        }else {AtackP = 0;}
 
-        if (block) {
-            g.drawImage(player_block[index], x, y, drawW, drawH, null);
-        } else if (atack) {
-            g.drawImage(player_atack[index], x, y, drawW, drawH, null);
-        } else if (run) {
-            g.drawImage(player_run[index], x, y, drawW, drawH, null);
-        } else {
-            g.drawImage(player_idle[index], x, y, drawW, drawH, null);
-        }
+        Image frame;
+        if (block) frame = player_block[index];
+        else if (atack) frame = player_atack[index];
+        else if (run) frame = player_run[index];
+        else frame = player_idle[index];
+
+        g.drawImage(frame, drawX, y, imgW * direction, 32*3, null);
+        g.drawRect(x,y,w,h);
+        g.drawRect(x-AtackP,y,100,100);
+
+
     }
+
+    public boolean isCalision(EnemyS enemyS) {
+        return enemyS.Colision().intersects(atackArea());
+    }
+    public Rectangle Calision(){
+        return new Rectangle(x,y,w,h);
+    }
+    public Rectangle atackArea(){return new Rectangle(getX()-AtackP,getY(),100,100);}
 
 
 
@@ -67,11 +68,11 @@ public class Player {
     public void animation() {
         //animation_speed++;
         //if (animation_speed >= 3) {
-            index++;
-            if (index >= index_count) {
-                index = 0;
-            }
-            animation_speed = 0;
+        index++;
+        if (index >= index_count) {
+            index = 0;
+        }
+        animation_speed = 0;
         //}
     }
 
@@ -118,5 +119,7 @@ public class Player {
     public void setSpeed(int speed) {this.speed = speed;}
 
     public void setHp(int hp) {this.hp = hp;}
+
+
 }
 

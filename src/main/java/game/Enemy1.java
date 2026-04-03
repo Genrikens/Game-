@@ -8,7 +8,6 @@ public class Enemy1 extends EnemyS{
 
     }
 
-
     @Override
     public Rectangle Colision() {
         return super.Colision();
@@ -19,13 +18,4 @@ public class Enemy1 extends EnemyS{
         g.drawImage(ememy1,getX(),getY(),16*3,32*3,null);
         super.drawEnemy(g);
     }
-
-
-
-
-
-
-
-
-
 }

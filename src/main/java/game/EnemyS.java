@@ -85,9 +85,7 @@ public class EnemyS {
         this.speed = speed;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
+    public void setHp(int hp) {this.hp = hp;}
 
     public void setDamage(int damage) {
         this.damage = damage;
@@ -149,9 +147,7 @@ public class EnemyS {
         return damage;
     }
 
-    public int getIndex() {
-        return index;
-    }
+    public int getIndex() {return index;}
 
     public int getIndex_count() {
         return index_count;

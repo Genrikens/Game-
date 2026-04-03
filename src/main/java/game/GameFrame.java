@@ -36,14 +36,34 @@ public class GameFrame extends JPanel implements KeyListener {
             enemyList.removeIf(i -> i.getHp() <= 0);
         }).start();
     }
+
+
     public void addEnemy(){
-        if (enemyList.size()<5) {
+        if (enemyList.size() < 7) {
             Random random = new Random();
-            Enemy1 newEnemy = new Enemy1(random.nextInt(0,800),478,16,32,1,1,1);
-            enemyList.add(newEnemy);
-            
+            int right = 1445;
+            int left = -10;
+
+            //                     (true = left, false = right)
+            int x = random.nextBoolean() ? left : right;
+
+            //                          0 1 2
+            int type = random.nextInt(3);
+
+            switch(type) {
+                case 0:
+                    enemyList.add(new Enemy1(x, 478, 16, 32, 1, 1, 1));
+                    break;
+                case 1:
+                    enemyList.add(new Enemy2(x, 478, 16, 32, 1, 1, 1));
+                    break;
+                case 2:
+                    enemyList.add(new Enemy3(x, 478, 16, 32, 1, 1, 1));
+                    break;
+            }
         }
     }
+
 
 
     @Override protected void paintComponent(Graphics g) {

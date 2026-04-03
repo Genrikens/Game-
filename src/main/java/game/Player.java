@@ -8,7 +8,6 @@ import java.awt.*;
 public class Player {
     boolean run = false, atack = false, block = false;
     private int x,y,w,h,speed,hp;
-    private static final Image player = SpriteLoader.load("/player/player.png");
     private static final Image[] player_idle = SpriteLoader.getFrames("/player/player_idle.png",32,32,2);
     private static final Image[] player_run = SpriteLoader.getFrames("/player/player_run.png",32,32,2);
     private static final Image[] player_atack = SpriteLoader.getFrames("/player/player_atack.png",32,32,2);

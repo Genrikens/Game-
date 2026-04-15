@@ -28,6 +28,7 @@ public class GameFrame extends JPanel implements KeyListener {
             player.animation();
             for (EnemyS enemyS : enemyList){
                 enemyS.muw(player);
+                repaint();
 
             }
             player.setIndex(player.getIndex());

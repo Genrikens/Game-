@@ -17,6 +17,7 @@ public class Player {
     private int animation_speed = 0;
     private int direction = 1;
     int AtackP;
+    int coldawn=15;
 
 
     public Player(int x, int y, int w, int h) {
@@ -65,14 +66,15 @@ public class Player {
 
 
     public void animation() {
-        //animation_speed++;
-        //if (animation_speed >= 3) {
-        index++;
-        if (index >= index_count) {
-            index = 0;
+
+        coldawn--;
+        if (coldawn<=0) {
+            index++;
+            if (index == 2) {
+                index = 0;
+            }
+            coldawn = 15;
         }
-        animation_speed = 0;
-        //}
     }
 
 

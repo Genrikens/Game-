@@ -1,19 +1,15 @@
 import java.awt.*;
 
-public class EnemyS {
+public abstract class EnemyS {
     boolean run = false, atack = false, block = false;
     private int x,y,w,h,speed,hp,damage;
-    //private static final Image player = SpriteLoader.load("/player/player.png");
-    //private static final Image[] player_idle = SpriteLoader.getFrames("/player/playerIdle.png",16,32,2);
-    //private static final Image[] player_run = SpriteLoader.getFrames("/player/player_run.png",32,32,2);
-    //private static final Image[] player_atack = SpriteLoader.getFrames("/player/player_atack.png",32,32,2);
-    //private static final Image[] player_block = SpriteLoader.getFrames();
     private int index = 0;
     private int index_count = 2;
-    private int animation_speed = 0;
-    private int direction = 1;
+    private int scoreE;
+    int coldawn=15;
 
-    public EnemyS(int x, int y, int w, int h, int speed, int hp, int damage) {
+
+    public EnemyS(int x, int y, int w, int h, int speed, int hp, int damage,int score) {
         this.x = x;
         this.y = y;
         this.w = w*3;
@@ -21,6 +17,8 @@ public class EnemyS {
         this.speed = speed;
         this.hp = hp;
         this.damage = damage;
+        this.scoreE = score;
+
     }
 
     public Rectangle Colision(){return new Rectangle(x,y,w,h);}
@@ -31,9 +29,9 @@ public class EnemyS {
     }
 
 
-    public void drawEnemy(Graphics g) {
-        g.drawRect(getX(), getY(), getW(), getH());
 
+
+    public void drawEnemy(Graphics g) {
     }
 
     public void atack(){
@@ -41,17 +39,25 @@ public class EnemyS {
     }
 
     public void animation() {
-        //animation_speed++;
-        //if (animation_speed >= 3) {
-        index++;
-        if (index >= index_count) {
-            index = 0;
+
+        coldawn--;
+        if (coldawn<=0) {
+            index++;
+            if (index == 2) {
+                index = 0;
+            }
+            coldawn = 15;
         }
-        animation_speed = 0;
-        //}
     }
 
 
+    public int getScoreE() {
+        return scoreE;
+    }
+
+    public void setScoreE(int scoreE) {
+        this.scoreE = scoreE;
+    }
 
     public void setRun(boolean run) {
         this.run = run;
@@ -97,14 +103,6 @@ public class EnemyS {
 
     public void setIndex_count(int index_count) {
         this.index_count = index_count;
-    }
-
-    public void setAnimation_speed(int animation_speed) {
-        this.animation_speed = animation_speed;
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
     }
 
     public boolean isRun() {
@@ -153,11 +151,4 @@ public class EnemyS {
         return index_count;
     }
 
-    public int getAnimation_speed() {
-        return animation_speed;
-    }
-
-    public int getDirection() {
-        return direction;
-    }
 }

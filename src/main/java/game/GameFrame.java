@@ -10,18 +10,21 @@ import java.util.Random;
 
 
 public class GameFrame extends JPanel implements KeyListener {
-
+    int Enemydirection;
     Background background = new Background(0, 0, 480*3, 270*3);
     Upground upground = new Upground(0,0,480*3,270*3);
     Player player = new Player(300,478,16,32);
     Viewport viewport = new Viewport(0,0,480*3,270*3);
     ArrayList<EnemyS> enemyList = new ArrayList<>();
+    int scoreC;
 
 
     public GameFrame() {
         setFocusable(true);
         addKeyListener(this);
         requestFocusInWindow();
+
+        
 
         new Timer(16, e -> {
 
@@ -47,19 +50,24 @@ public class GameFrame extends JPanel implements KeyListener {
 
             //                     (true = left, false = right)
             int x = random.nextBoolean() ? left : right;
+            if (x == left) {
+                Enemydirection = 1;
+            }else {
+                Enemydirection = -1;
+            }
 
-            //                          0 1 2
+            //                         0 1 2
             int type = random.nextInt(3);
 
             switch(type) {
                 case 0:
-                    enemyList.add(new Enemy1(x, 478, 16, 32, 1, 1, 1));
+                    enemyList.add(new Enemy1(x, 478, 32, 32, 2, 1, 1,Enemydirection,10));
                     break;
                 case 1:
-                    enemyList.add(new Enemy2(x, 478, 16, 32, 1, 1, 1));
+                    enemyList.add(new Enemy2(x, 478, 32, 32, 1, 1, 1,Enemydirection,25));
                     break;
                 case 2:
-                    enemyList.add(new Enemy3(x, 478, 16, 32, 1, 1, 1));
+                    enemyList.add(new Enemy3(x, 478, 64, 32, 1, 1, 1,Enemydirection,15));
                     break;
             }
         }
@@ -72,14 +80,16 @@ public class GameFrame extends JPanel implements KeyListener {
         super.paintComponent(g);
         background.drawBackground(g);
 
+
         for (EnemyS enemyS : enemyList){
             if (enemyS.getHp()!=0){
                 enemyS.drawEnemy(g);
+                enemyS.animation();
                 if( player.isCalision(enemyS)){
 
                     if(player.atack){
                         enemyS.setHp(enemyS.getHp() - 1);
-
+                        scoreC += enemyS.getScoreE();
 
                     }
                 }
@@ -91,6 +101,10 @@ public class GameFrame extends JPanel implements KeyListener {
 
         upground.drawUpground(g);
         viewport.drawUpground(g);
+        g.setFont(new Font("Arial",Font.BOLD,64));
+        g.drawString(""+scoreC,30,100);
+
+
 
     }
 

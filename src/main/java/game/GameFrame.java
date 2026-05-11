@@ -10,13 +10,17 @@ import java.util.Random;
 
 
 public class GameFrame extends JPanel implements KeyListener {
+    int coldawn;
     int Enemydirection;
     Background background = new Background(0, 0, 480*3, 270*3);
     Upground upground = new Upground(0,0,480*3,270*3);
     Player player = new Player(300,478,16,32);
     Viewport viewport = new Viewport(0,0,480*3,270*3);
     ArrayList<EnemyS> enemyList = new ArrayList<>();
+    private int nextEnergitikTime = 250;
+
     int scoreC;
+    Energitik energitik;
 
 
     public GameFrame() {
@@ -24,16 +28,22 @@ public class GameFrame extends JPanel implements KeyListener {
         addKeyListener(this);
         requestFocusInWindow();
 
-        
-
         new Timer(16, e -> {
 
             player.animation();
             for (EnemyS enemyS : enemyList){
                 enemyS.muw(player);
-                repaint();
+                enemyS.Atack(player);
+
 
             }
+            if (energitik != null && player.isCalisionEnergitik(energitik)){
+                if (player.getHp() != 3) {
+                    player.setHp(player.getHp() + 1);
+                    energitik = null;
+                }
+            }
+            addEnergitik();
             player.setIndex(player.getIndex());
             addEnemy();
             repaint();
@@ -42,33 +52,56 @@ public class GameFrame extends JPanel implements KeyListener {
     }
 
 
-    public void addEnemy(){
-        if (enemyList.size() < 7) {
-            Random random = new Random();
-            int right = 1445;
-            int left = -10;
 
-            //                     (true = left, false = right)
-            int x = random.nextBoolean() ? left : right;
-            if (x == left) {
-                Enemydirection = 1;
-            }else {
-                Enemydirection = -1;
+
+    public void addEnergitik(){
+        if (energitik == null && scoreC >= nextEnergitikTime){
+            energitik = new Energitik(500,500,16,16);
+            nextEnergitikTime += 550;
+        }
+    }
+
+
+
+
+    public void addEnemy() {
+        if (enemyList.size() >= 7) return;
+
+        Random random = new Random();
+        int right = 1445;
+        int left = -10;
+
+        int x = random.nextBoolean() ? left : right;
+        Enemydirection = (x == left) ? 1 : -1;
+
+        int type = random.nextInt(3);
+
+        switch (type) {
+            case 0: {
+                EnemyS Enemy1 = new Enemy1(x, 478, 32, 32, 2, 1, 1, Enemydirection, 10);
+                for (EnemyS enemyS : enemyList) {
+                    if (enemyS.isCalEnemy(Enemy1)) {
+                        return;
+                    }
+                }
+                enemyList.add(Enemy1);
+                break;
             }
-
-            //                         0 1 2
-            int type = random.nextInt(3);
-
-            switch(type) {
-                case 0:
-                    enemyList.add(new Enemy1(x, 478, 32, 32, 2, 1, 1,Enemydirection,10));
-                    break;
-                case 1:
-                    enemyList.add(new Enemy2(x, 478, 32, 32, 1, 1, 1,Enemydirection,25));
-                    break;
-                case 2:
-                    enemyList.add(new Enemy3(x, 478, 64, 32, 1, 1, 1,Enemydirection,15));
-                    break;
+            case 1: {
+                EnemyS Enemy2 = new Enemy2(x, 478, 32, 32, 1, 1, 1, Enemydirection, 25);
+                for (EnemyS enemyS : enemyList) {
+                    if (enemyS.isCalEnemy(Enemy2)) return;
+                }
+                //enemyList.add(Enemy2);
+                break;
+            }
+            case 2: {
+                EnemyS Enemy3 = new Enemy3(x, 478, 64, 32, 1, 1, 1, Enemydirection, 15);
+                for (EnemyS enemyS : enemyList) {
+                    if (enemyS.isCalEnemy(Enemy3)) return;
+                }
+                //enemyList.add(Enemy3);
+                break;
             }
         }
     }
@@ -84,7 +117,11 @@ public class GameFrame extends JPanel implements KeyListener {
         for (EnemyS enemyS : enemyList){
             if (enemyS.getHp()!=0){
                 enemyS.drawEnemy(g);
-                enemyS.animation();
+                coldawn--;
+                if (coldawn<=0) {
+                    enemyS.animation();
+                    coldawn = 15;
+                }
                 if( player.isCalision(enemyS)){
 
                     if(player.atack){
@@ -98,12 +135,15 @@ public class GameFrame extends JPanel implements KeyListener {
 
 
         player.drawPlayer(g);
+        if (energitik != null){
+            energitik.drawEnergitik(g);
+        }
 
         upground.drawUpground(g);
         viewport.drawUpground(g);
         g.setFont(new Font("Arial",Font.BOLD,64));
-        g.drawString(""+scoreC,30,100);
-
+        g.drawString("" + scoreC,30,100);
+        player.drawHP(g);
 
 
     }
@@ -113,23 +153,45 @@ public class GameFrame extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+
         int code = e.getKeyCode();
+        switch (code) {
+            case KeyEvent.VK_UP:
+            //case KeyEvent.VK_W:
+            player.block = true;
+                break;
 
-        if (code == KeyEvent.VK_UP || code == KeyEvent.VK_W ){player.block = true;}
+            case KeyEvent.VK_DOWN:
+            //case KeyEvent.VK_S:
+            player.atack = true;
+                break;
 
-        if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S ){player.atack = true;}
-
-        if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A ) {
+            case KeyEvent.VK_LEFT:
+            //case KeyEvent.VK_A:
             player.setX(player.getX() - player.getSpeed());
-            player.setDirection(-1);
-            player.run = true;
+
+            if (player.getX() >= -10) {
+                player.setDirection(-1);
+                player.run = true;
+                break;
+            }else {
+                player.setX(-19);
+                player.setDirection(-1);
+            }
+
+            case KeyEvent.VK_RIGHT:
+            //case KeyEvent.VK_D:
+            player.setX(player.getX() + player.getSpeed());
+                if (player.getX() <= 1385) {
+                    player.setDirection(1);
+                    player.run = true;
+                    break;
+                }else{
+                    player.setDirection(-1);
+                    player.setX(1384);
+                }
         }
 
-        if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D ){
-            player.setX(player.getX() + player.getSpeed());
-            player.setDirection(1);
-            player.run = true;
-        }
 
     }
 

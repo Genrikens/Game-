@@ -8,6 +8,7 @@ import java.awt.*;
 public class Player {
     boolean run = false, atack = false, block = false;
     private int x,y,w,h,speed,hp;
+    private static final Image[] player_hp = SpriteLoader.getFrames("/player/player_hp.png",64,32,4);
     private static final Image[] player_idle = SpriteLoader.getFrames("/player/player_idle.png",32,32,2);
     private static final Image[] player_run = SpriteLoader.getFrames("/player/player_run.png",32,32,2);
     private static final Image[] player_atack = SpriteLoader.getFrames("/player/player_atack.png",32,32,2);
@@ -31,8 +32,14 @@ public class Player {
 
 
 
+    public void drawHP(Graphics g){
+        g.drawImage(player_hp[hp], 20, 650, 64*4, 32*4, null);
+    }
+
+
 
     public void drawPlayer(Graphics g){
+
 
         int imgW = 32 * 3;
         int drawX = x;
@@ -49,18 +56,23 @@ public class Player {
 
         g.drawImage(frame, drawX, y, imgW * direction, 32*3, null);
         g.drawRect(x,y,w,h);
-        g.drawRect(x-AtackP,y,100,100);
+        g.drawRect(x-AtackP,y+50,100,50);
+
 
 
     }
 
+
+    public boolean isCalisionEnergitik(Energitik energitik) {
+        return energitik.Calision().intersects(Calision());
+    }
     public boolean isCalision(EnemyS enemyS) {
         return enemyS.Colision().intersects(atackArea());
     }
     public Rectangle Calision(){
         return new Rectangle(x,y,w,h);
     }
-    public Rectangle atackArea(){return new Rectangle(getX()-AtackP,getY(),100,100);}
+    public Rectangle atackArea(){return new Rectangle(getX()-AtackP,getY()+50,100,50);}
 
 
 

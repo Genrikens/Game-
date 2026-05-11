@@ -11,9 +11,9 @@ public class Enemy2 extends EnemyS {
 
     }
 
-    @Override
+
     public Rectangle Colision() {
-        return super.Colision();
+        return new Rectangle(getX(),getY(),getW(),getH());
     }
 
     public void animation() {

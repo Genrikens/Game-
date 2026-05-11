@@ -3,17 +3,30 @@ import java.awt.*;
 public class Enemy1 extends EnemyS {
     private static final Image[] enemy_run = SpriteLoader.getFrames("/enemy1/enemy_1_run.png", 32, 32, 2);
     private int index, direction, runP;
+    private int Cx,Cy,Cw,Ch;
 
 
     public Enemy1(int x, int y, int w, int h, int speed, int hp, int damage, int direction,int scoreP) {
         super(x, y, w, h, speed, hp, damage,scoreP);
         this.direction = direction;
 
+
     }
 
     @Override
     public Rectangle Colision() {
-        return super.Colision();
+        return new Rectangle(getX()+16, getY()+32, getW()/2, getH()/2);
+
+    }
+
+    @Override
+    public boolean isCalision(Player player) {
+        return super.isCalision(player);
+    }
+
+    @Override
+    public Rectangle atackArea() {
+        return new Rectangle(getX()+8,getY()+70,90,10);
     }
 
     public void animation() {
@@ -26,6 +39,7 @@ public class Enemy1 extends EnemyS {
 
     @Override
     public void drawEnemy(Graphics g) {
+
         int img = 32*3;
 
         int drawX = getX();
@@ -38,7 +52,8 @@ public class Enemy1 extends EnemyS {
         g.drawImage(frame, drawX+runP, getY(), img * direction, img, null);
 
         // хитбокс
-        g.drawRect(getX(), getY(), img, img);
+        g.setColor(Color.green);
+        g.drawRect(getX()+8,getY()+70,90,10);
 
         super.drawEnemy(g);
     }

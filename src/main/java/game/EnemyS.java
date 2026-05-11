@@ -1,13 +1,14 @@
 import java.awt.*;
 
-public abstract class EnemyS {
+public class EnemyS {
     boolean run = false, atack = false, block = false;
     private int x,y,w,h,speed,hp,damage;
     private int index = 0;
     private int index_count = 2;
     private int scoreE;
-    int coldawn=15;
-
+    private int coldawn=15;
+    private int coldawnbAtack = 200;
+    private int Cx,Cy,Cw,Ch;
 
     public EnemyS(int x, int y, int w, int h, int speed, int hp, int damage,int score) {
         this.x = x;
@@ -19,6 +20,28 @@ public abstract class EnemyS {
         this.damage = damage;
         this.scoreE = score;
 
+
+
+    }
+
+
+    public void Atack(Player player){
+        if (isCalision(player)){
+            System.out.println(coldawnbAtack);
+            coldawnbAtack--;
+            if(coldawnbAtack == 0 && isCalision(player)) {
+                player.setHp(player.getHp() - damage);
+                coldawnbAtack = 200;
+            }
+        }
+    }
+
+
+
+
+
+    public Rectangle atackArea(){
+        return new Rectangle();
     }
 
     public Rectangle Colision(){return new Rectangle(x,y,w,h);}
@@ -32,10 +55,15 @@ public abstract class EnemyS {
 
 
     public void drawEnemy(Graphics g) {
+
     }
 
-    public void atack(){
+    public boolean isCalEnemy(EnemyS enemyS){
+        return enemyS.Colision().intersects(Colision());
+    }
 
+    public boolean isCalision(Player player) {
+        return player.Calision().intersects(atackArea());
     }
 
     public void animation() {
@@ -43,6 +71,7 @@ public abstract class EnemyS {
         coldawn--;
         if (coldawn<=0) {
             index++;
+
             if (index == 2) {
                 index = 0;
             }

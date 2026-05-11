@@ -137,6 +137,8 @@ public class GameFrame extends JPanel implements KeyListener {
         player.drawPlayer(g);
         if (energitik != null){
             energitik.drawEnergitik(g);
+
+
         }
 
         upground.drawUpground(g);

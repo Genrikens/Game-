@@ -5,10 +5,16 @@ public class Enemy2 extends EnemyS {
     private int index, direction;
 
 
-    public Enemy2(int x, int y, int w, int h, int speed, int hp, int damage, int direction,int scoreP) {
+    public Enemy2(int x, int y, int w, int h, int speed, int hp, int damage, int direction,int scoreP, int coldawnbAtack) {
         super(x, y, w, h, speed, hp, damage,scoreP);
         this.direction = direction;
 
+    }
+
+
+    @Override
+    public Rectangle atackArea() {
+        return new Rectangle(getX()+8,getY()+70,90,10);
     }
 
 
@@ -37,7 +43,7 @@ public class Enemy2 extends EnemyS {
         g.drawImage(frame, drawX, getY(), 64*3 * direction, 32*3, null);
 
         // хитбокс
-        g.drawRect(getX(), getY(), 32*3, 32*3);
+        //g.drawRect(getX(), getY(), 32*3, 32*3);
 
         super.drawEnemy(g);
     }

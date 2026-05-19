@@ -29,6 +29,7 @@ public class GameFrame extends JPanel implements KeyListener {
         requestFocusInWindow();
 
         new Timer(16, e -> {
+            repaint();
 
             player.animation();
             for (EnemyS enemyS : enemyList){
@@ -78,9 +79,9 @@ public class GameFrame extends JPanel implements KeyListener {
 
         switch (type) {
             case 0: {
-                EnemyS Enemy1 = new Enemy1(x, 478, 32, 32, 2, 1, 1, Enemydirection, 10);
+                EnemyS Enemy1 = new Enemy1(x, 478, 32, 32, 2, 1, 1, Enemydirection, 10,100);
                 for (EnemyS enemyS : enemyList) {
-                    if (enemyS.isCalEnemy(Enemy1)) {
+                    if (enemyS.isCalEnemy(enemyS)) {
                         return;
                     }
                 }
@@ -88,17 +89,17 @@ public class GameFrame extends JPanel implements KeyListener {
                 break;
             }
             case 1: {
-                EnemyS Enemy2 = new Enemy2(x, 478, 32, 32, 1, 1, 1, Enemydirection, 25);
+                EnemyS Enemy2 = new Enemy2(x, 478, 32, 32, 1, 1, 1, Enemydirection, 25,200);
                 for (EnemyS enemyS : enemyList) {
-                    if (enemyS.isCalEnemy(Enemy2)) return;
+                    if (enemyS.isCalEnemy(enemyS)) return;
                 }
-                //enemyList.add(Enemy2);
+                enemyList.add(Enemy2);
                 break;
             }
             case 2: {
-                EnemyS Enemy3 = new Enemy3(x, 478, 64, 32, 1, 1, 1, Enemydirection, 15);
+                EnemyS Enemy3 = new Enemy3(x, 478, 64, 32, 1, 1, 1, Enemydirection, 15,300);
                 for (EnemyS enemyS : enemyList) {
-                    if (enemyS.isCalEnemy(Enemy3)) return;
+                    if (enemyS.isCalEnemy(enemyS)) return;
                 }
                 //enemyList.add(Enemy3);
                 break;

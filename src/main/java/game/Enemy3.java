@@ -5,7 +5,7 @@ public class Enemy3 extends EnemyS {
     private int index, direction, runP;
 
 
-    public Enemy3(int x, int y, int w, int h, int speed, int hp, int damage, int direction,int scoreP) {
+    public Enemy3(int x, int y, int w, int h, int speed, int hp, int damage, int direction,int scoreP,int coldawnbAtack) {
         super(x, y, w, h, speed, hp, damage, scoreP);
         this.direction = direction;
 

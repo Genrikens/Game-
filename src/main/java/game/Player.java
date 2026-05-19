@@ -55,8 +55,8 @@ public class Player {
         else frame = player_idle[index];
 
         g.drawImage(frame, drawX, y, imgW * direction, 32*3, null);
-        g.drawRect(x,y,w,h);
-        g.drawRect(x-AtackP,y+50,100,50);
+        //g.drawRect(x,y,w,h);
+        //g.drawRect(x-AtackP,y+50,100,50);
 
 
 

@@ -2,15 +2,21 @@ import java.awt.*;
 
 public class EnemyS {
     boolean run = false, atack = false, block = false;
-    private int x,y,w,h,speed,hp,damage;
+    private int x;
+    private int y;
+    private int w;
+    private int h;
+    private int speed;
+    private int hp;
+    int damage;
     private int index = 0;
     private int index_count = 2;
     private int scoreE;
     private int coldawn=15;
-    private int coldawnbAtack = 200;
-    private int Cx,Cy,Cw,Ch;
+    int coldawnbAtack;
 
-    public EnemyS(int x, int y, int w, int h, int speed, int hp, int damage,int score) {
+
+    public EnemyS(int x, int y, int w, int h, int speed, int hp, int damage, int score) {
         this.x = x;
         this.y = y;
         this.w = w*3;
@@ -26,14 +32,7 @@ public class EnemyS {
 
 
     public void Atack(Player player){
-        if (isCalision(player)){
-            System.out.println(coldawnbAtack);
-            coldawnbAtack--;
-            if(coldawnbAtack == 0 && isCalision(player)) {
-                player.setHp(player.getHp() - damage);
-                coldawnbAtack = 200;
-            }
-        }
+
     }
 
 
@@ -67,6 +66,11 @@ public class EnemyS {
     }
 
     public void animation() {
+
+
+
+
+
 
         coldawn--;
         if (coldawn<=0) {

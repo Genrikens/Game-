@@ -24,15 +24,18 @@ public class Enemy1 extends EnemyS {
 
     @Override
     public void Atack(Player player) {
-            if (isCalision(player)){
+            if (isCalision(player) && !player.isBlock()){
                 coldawnbAtack--;
                 atack = true;
 
                 if(coldawnbAtack == 0 && isCalision(player)) {
-                    player.setHp(player.getHp() - damage);
+                    if (!player.isBlock()) {
+                        player.setHp(player.getHp() - damage);
+                    }
                     coldawnbAtack = 100;
-                }
-            }
+
+                }else atack = true;
+            }else atack = false;
 
     }
 

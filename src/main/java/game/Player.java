@@ -17,8 +17,10 @@ public class Player {
     private int index_count = 2;
     private int animation_speed = 0;
     private int direction = 1;
-    int AtackP;
-    int coldawn=15;
+    private int AtackP;
+    private int coldawn=15;
+    private boolean dead = false;
+
 
 
     public Player(int x, int y, int w, int h) {
@@ -28,13 +30,20 @@ public class Player {
         this.h = h*3;
         this.speed = 10;
         this.hp = 3;
+        block = false;
     }
 
 
 
     public void drawHP(Graphics g){
-        g.drawImage(player_hp[hp], 20, 650, 64*4, 32*4, null);
+        if (getHp() >= 0){
+            g.drawImage(player_hp[hp], 20, 650, 64*4, 32*4, null);
+        }else {
+            dead = true;
+            g.drawImage(player_hp[0], 20, 650, 64*4, 32*4, null);
+        }
     }
+
 
 
 
@@ -53,6 +62,11 @@ public class Player {
         else if (atack) frame = player_atack[index];
         else if (run) frame = player_run[index];
         else frame = player_idle[index];
+
+        if (getHp()<=-1){
+            g.drawImage(player_idle[index], drawX, y, imgW * direction, 32*3, null);
+        }
+
 
         g.drawImage(frame, drawX, y, imgW * direction, 32*3, null);
         //g.drawRect(x,y,w,h);
@@ -92,6 +106,15 @@ public class Player {
 
     //_____GETRY_____
 
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public boolean isBlock() {
+        return block;
+    }
+
     public int getX() {return x;}
 
     public int getY() {return y;}
@@ -112,6 +135,10 @@ public class Player {
 
     //_____SETRY_____
 
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
 
     public void setDirection(int direction) {this.direction = direction;}
 

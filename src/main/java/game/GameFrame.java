@@ -10,6 +10,9 @@ import java.util.Random;
 
 
 public class GameFrame extends JPanel implements KeyListener {
+    private static final Image DEAD= SpriteLoader.load("game/DEAD.png");
+    private static final Image Bexit = SpriteLoader.load("game/exit.png");
+    private static final Image Bplay = SpriteLoader.load("game/replay.png");
     int coldawn;
     int Enemydirection;
     Background background = new Background(0, 0, 480*3, 270*3);
@@ -19,37 +22,126 @@ public class GameFrame extends JPanel implements KeyListener {
     ArrayList<EnemyS> enemyList = new ArrayList<>();
     private int nextEnergitikTime = 250;
 
+    JButton play = new JButton();
+    JButton exit = new JButton();
+    JPanel buttons = new JPanel();
+
     int scoreC;
     Energitik energitik;
 
 
     public GameFrame() {
-        setFocusable(true);
+        setLayout(null);
         addKeyListener(this);
-        requestFocusInWindow();
+        setFocusable(true);
+
+        int rr = 49;
+
+
+        JLabel DEADL = new JLabel();
+        DEADL.setIcon(new ImageIcon(DEAD.getScaledInstance(480*2,270*2,Image.SCALE_SMOOTH)));
+        DEADL.setBounds(250, -700, 480*8, 270*8);
+        DEADL.setVisible(false);
+        add(DEADL);
+
+
+        play.setIcon(new ImageIcon(Bplay.getScaledInstance(rr,rr,Image.SCALE_SMOOTH)));// позиция и размер панели в buttons
+        play.setPreferredSize(new Dimension(rr,rr));
+        play.setOpaque(false);
+        play.setContentAreaFilled(false);
+        play.setBorderPainted(false);
+        play.addActionListener(e -> {
+            restart();
+        });
+
+
+        exit.setIcon(new ImageIcon(Bexit.getScaledInstance(rr,rr,Image.SCALE_SMOOTH)));// позиция и размер панели в buttons
+        exit.setPreferredSize(new Dimension(rr,rr));
+        exit.setOpaque(false);
+        exit.setContentAreaFilled(false);
+        exit.setBorderPainted(false);
+        exit.addActionListener(e -> System.exit(0));
+
+
+
+        buttons.setOpaque(false);
+        buttons.setBounds(234, 19, 300, 200); // позиция и размер панели в GameFrame
+
+
+
+        buttons.add(exit);
+        buttons.add(play);
+
+        add(buttons);
+        buttons.setVisible(false);
+
+
+
+
+
+
+
+
+
+
+
 
         new Timer(16, e -> {
-            repaint();
-
-            player.animation();
-            for (EnemyS enemyS : enemyList){
-                enemyS.muw(player);
-                enemyS.Atack(player);
-
-
+            if (player.isDead()) {
+             buttons.setVisible(true);
+             DEADL.setVisible(true);
             }
-            if (energitik != null && player.isCalisionEnergitik(energitik)){
-                if (player.getHp() != 3) {
-                    player.setHp(player.getHp() + 1);
-                    energitik = null;
+
+
+                if (!player.isDead()) {
+
+                repaint();
+
+                player.animation();
+                for (EnemyS enemyS : enemyList) {
+                    enemyS.muw(player);
+                    enemyS.Atack(player);
+
+
                 }
+                if (energitik != null && player.isCalisionEnergitik(energitik)) {
+                    if (player.getHp() != 3) {
+                        player.setHp(player.getHp() + 1);
+                        energitik = null;
+                    }
+                }
+                addEnergitik();
+                player.setIndex(player.getIndex());
+                addEnemy();
+                repaint();
+                enemyList.removeIf(i -> i.getHp() <= 0);
             }
-            addEnergitik();
-            player.setIndex(player.getIndex());
-            addEnemy();
-            repaint();
-            enemyList.removeIf(i -> i.getHp() <= 0);
         }).start();
+    }
+
+
+
+    public void restart() {
+
+        scoreC = 0;
+        nextEnergitikTime = 250;
+        enemyList.clear();
+        energitik = null;
+        coldawn = 15;
+        player.setX(300);
+        player.setY(478);
+        player.setHp(3);
+        player.setDead(false);
+        player.run = false;
+        player.atack = false;
+        player.block = false;
+        player.setDirection(1);
+        player.setIndex(0);
+
+
+        buttons.setVisible(false);
+
+        repaint();
     }
 
 
@@ -89,7 +181,7 @@ public class GameFrame extends JPanel implements KeyListener {
                 break;
             }
             case 1: {
-                EnemyS Enemy2 = new Enemy2(x, 478, 32, 32, 1, 1, 1, Enemydirection, 25,200);
+                EnemyS Enemy2 = new Enemy2(x, 478, 32, 32, 1, 1, 2, Enemydirection, 25,50);
                 for (EnemyS enemyS : enemyList) {
                     if (enemyS.isCalEnemy(enemyS)) return;
                 }
@@ -97,15 +189,18 @@ public class GameFrame extends JPanel implements KeyListener {
                 break;
             }
             case 2: {
-                EnemyS Enemy3 = new Enemy3(x, 478, 64, 32, 1, 1, 1, Enemydirection, 15,300);
+                EnemyS Enemy3 = new Enemy3(x, 478, 64, 32, 1, 1, 1, Enemydirection, 15,10);
                 for (EnemyS enemyS : enemyList) {
                     if (enemyS.isCalEnemy(enemyS)) return;
                 }
-                //enemyList.add(Enemy3);
+                enemyList.add(Enemy3);
                 break;
             }
         }
     }
+
+
+
 
 
 
@@ -138,8 +233,6 @@ public class GameFrame extends JPanel implements KeyListener {
         player.drawPlayer(g);
         if (energitik != null){
             energitik.drawEnergitik(g);
-
-
         }
 
         upground.drawUpground(g);

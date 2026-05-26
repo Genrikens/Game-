@@ -77,4 +77,8 @@ public class Enemy2 extends EnemyS {
 
         super.drawEnemy(g);
     }
+    @Override
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
 }

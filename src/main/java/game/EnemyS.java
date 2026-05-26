@@ -14,7 +14,7 @@ public class EnemyS {
     private int scoreE;
     private int coldawn=15;
     int coldawnbAtack;
-
+    int direction;
 
     public EnemyS(int x, int y, int w, int h, int speed, int hp, int damage, int score) {
         this.x = x;
@@ -46,7 +46,7 @@ public class EnemyS {
     public Rectangle Colision(){return new Rectangle(x,y,w,h);}
 
     public void muw(Player player){
-        if (player.getX()+60 > x) x += speed;
+        if (player.getX()+30 > x) x += speed;
         if (player.getX()-60 < x) x -= speed;
     }
 
@@ -83,6 +83,9 @@ public class EnemyS {
         }
     }
 
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
 
     public int getScoreE() {
         return scoreE;

@@ -10,11 +10,14 @@ import java.util.Random;
 //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
 
 public class GameFrame extends JPanel implements KeyListener {
+    private int spawnTickCounter = 0; // считает тики таймера (каждый тик ~16ms)
+    private int spawnIntervalTicks = 75; // через сколько тиков спавнить (75*16ms ≈ 1200ms)
+
     private static final Image DEAD= SpriteLoader.load("game/DEAD.png");
     private static final Image Bexit = SpriteLoader.load("game/exit.png");
     private static final Image Bplay = SpriteLoader.load("game/replay.png");
     int coldawn;
-    int Enemydirection;
+    int dir;
     Background background = new Background(0, 0, 480*3, 270*3);
     Upground upground = new Upground(0,0,480*3,270*3);
     Player player = new Player(300,478,16,32);
@@ -88,6 +91,7 @@ public class GameFrame extends JPanel implements KeyListener {
 
 
         new Timer(16, e -> {
+
             if (player.isDead()) {
              buttons.setVisible(true);
              DEADL.setVisible(true);
@@ -99,13 +103,15 @@ public class GameFrame extends JPanel implements KeyListener {
                 repaint();
 
                 player.animation();
-                for (EnemyS enemyS : enemyList) {
-                    enemyS.muw(player);
-                    enemyS.Atack(player);
+                    for (EnemyS enemyS : enemyList) {
+                        dir = (enemyS.getX() < player.getX()) ? 1 : -1;
+                        enemyS.setDirection(dir);
 
+                        enemyS.muw(player);
+                        enemyS.Atack(player);
+                    }
 
-                }
-                if (energitik != null && player.isCalisionEnergitik(energitik)) {
+                    if (energitik != null && player.isCalisionEnergitik(energitik)) {
                     if (player.getHp() != 3) {
                         player.setHp(player.getHp() + 1);
                         energitik = null;
@@ -113,7 +119,17 @@ public class GameFrame extends JPanel implements KeyListener {
                 }
                 addEnergitik();
                 player.setIndex(player.getIndex());
-                addEnemy();
+
+                    spawnTickCounter++;
+                    if (spawnTickCounter >= spawnIntervalTicks) {
+                        if (enemyList.size() < 7) {
+                            spawnOneEnemy();
+                        }
+                        spawnTickCounter = 0;
+                    }
+
+
+
                 repaint();
                 enemyList.removeIf(i -> i.getHp() <= 0);
             }
@@ -158,47 +174,49 @@ public class GameFrame extends JPanel implements KeyListener {
 
 
 
-    public void addEnemy() {
-        if (enemyList.size() >= 7) return;
+    public void spawnOneEnemy() {
 
-        Random random = new Random();
-        int right = 1445;
-        int left = -10;
 
-        int x = random.nextBoolean() ? left : right;
-        Enemydirection = (x == left) ? 1 : -1;
+            Random random = new Random();
+            int right = 1445;
+            int left = -10;
 
-        int type = random.nextInt(3);
+            int x = random.nextBoolean() ? left : right;
+            int direction = (x < player.getX()) ? 1 : -1;
 
-        switch (type) {
-            case 0: {
-                EnemyS Enemy1 = new Enemy1(x, 478, 32, 32, 2, 1, 1, Enemydirection, 10,100);
-                for (EnemyS enemyS : enemyList) {
-                    if (enemyS.isCalEnemy(enemyS)) {
-                        return;
-                    }
+            int type = random.nextInt(3);
+
+            switch (type) {
+                case 0: {
+                    EnemyS Enemy1 = new Enemy1(x, 478, 32, 32, 2, 1, 1, direction, 10, 100);
+//                    for (EnemyS enemyS : enemyList) {
+//                        if (enemyS.isCalEnemy(enemyS)) {
+//                            return;
+//                        }
+//                    }
+                    enemyList.add(Enemy1);
+                    break;
                 }
-                enemyList.add(Enemy1);
-                break;
-            }
-            case 1: {
-                EnemyS Enemy2 = new Enemy2(x, 478, 32, 32, 1, 1, 2, Enemydirection, 25,50);
-                for (EnemyS enemyS : enemyList) {
-                    if (enemyS.isCalEnemy(enemyS)) return;
+                case 1: {
+                    EnemyS Enemy2 = new Enemy2(x, 478, 32, 32, 1, 1, 2, direction, 25, 50);
+//                    for (EnemyS enemyS : enemyList) {
+//                        if (enemyS.isCalEnemy(enemyS)) return;
+//                    }
+                    enemyList.add(Enemy2);
+                    break;
                 }
-                enemyList.add(Enemy2);
-                break;
-            }
-            case 2: {
-                EnemyS Enemy3 = new Enemy3(x, 478, 64, 32, 1, 1, 1, Enemydirection, 15,10);
-                for (EnemyS enemyS : enemyList) {
-                    if (enemyS.isCalEnemy(enemyS)) return;
+                case 2: {
+                    EnemyS Enemy3 = new Enemy3(x, 478, 64, 32, 1, 1, 1, direction, 15, 10);
+//                    for (EnemyS enemyS : enemyList) {
+//                        if (enemyS.isCalEnemy(enemyS)) return;
+//                    }
+                    enemyList.add(Enemy3);
+                    break;
                 }
-                enemyList.add(Enemy3);
-                break;
             }
         }
-    }
+
+
 
 
 

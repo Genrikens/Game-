@@ -4,7 +4,7 @@ public class Enemy3 extends EnemyS {
     private static final Image[] enemy_run = SpriteLoader.getFrames("/enemy3/enemy_3_run.png", 32, 32, 2);
     private static final Image[] enemy_atack = SpriteLoader.getFrames("enemy3/enemy3ATACK.png", 192/2, 32, 2);
     private int index, direction, runP,indexAtack;
-
+    private int img = 32*3;
 
     public Enemy3(int x, int y, int w, int h, int speed, int hp, int damage, int direction,int scoreP,int coldawnbAtack) {
         super(x, y, w, h, speed, hp, damage, scoreP);
@@ -41,7 +41,7 @@ public class Enemy3 extends EnemyS {
     }
 
     public Rectangle Colision() {
-        return new Rectangle(getX(),getY(),getW(),getH());
+        return new Rectangle(getX(),getY(),img,img);
     }
 
     public void animation() {
@@ -59,7 +59,7 @@ public class Enemy3 extends EnemyS {
 
     @Override
     public void drawEnemy(Graphics g) {
-        int img = 32*3;
+
 
         int drawX = getX();
         if (direction == -1) {
@@ -79,8 +79,13 @@ public class Enemy3 extends EnemyS {
 
 
         // хитбокс
-        g.drawRect(getX(), getY(), img, img);
+//        g.setColor(Color.green);
+//        g.drawRect(getX(), getY(), img, img);
 
         super.drawEnemy(g);
+    }
+    @Override
+    public void setDirection(int direction) {
+        this.direction = direction;
     }
 }

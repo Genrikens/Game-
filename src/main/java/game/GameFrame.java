@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
-
+//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
 
 public class GameFrame extends JPanel implements KeyListener {
     private static final Image DEAD= SpriteLoader.load("game/DEAD.png");
@@ -22,6 +22,7 @@ public class GameFrame extends JPanel implements KeyListener {
     ArrayList<EnemyS> enemyList = new ArrayList<>();
     private int nextEnergitikTime = 250;
 
+    JLabel DEADL = new JLabel();
     JButton play = new JButton();
     JButton exit = new JButton();
     JPanel buttons = new JPanel();
@@ -38,7 +39,7 @@ public class GameFrame extends JPanel implements KeyListener {
         int rr = 49;
 
 
-        JLabel DEADL = new JLabel();
+
         DEADL.setIcon(new ImageIcon(DEAD.getScaledInstance(480*2,270*2,Image.SCALE_SMOOTH)));
         DEADL.setBounds(250, -700, 480*8, 270*8);
         DEADL.setVisible(false);
@@ -122,7 +123,7 @@ public class GameFrame extends JPanel implements KeyListener {
 
 
     public void restart() {
-
+        DEADL.setVisible(false);
         scoreC = 0;
         nextEnergitikTime = 250;
         enemyList.clear();

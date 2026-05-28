@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
-//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
+
 
 public class GameFrame extends JPanel implements KeyListener {
     private int spawnTickCounter = 0; // считает тики таймера (каждый тик ~16ms)

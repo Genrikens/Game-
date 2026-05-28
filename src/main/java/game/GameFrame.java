@@ -256,6 +256,7 @@ public class GameFrame extends JPanel implements KeyListener {
 
         upground.drawUpground(g);
         viewport.drawUpground(g);
+        g.setColor(new Color(0x83, 0x95, 0x9F));
         g.setFont(new Font("Arial",Font.BOLD,64));
         g.drawString("" + scoreC,30,100);
         player.drawHP(g);
@@ -271,18 +272,18 @@ public class GameFrame extends JPanel implements KeyListener {
 
         int code = e.getKeyCode();
         switch (code) {
-            case KeyEvent.VK_UP:
-            //case KeyEvent.VK_W:
+            //case KeyEvent.VK_UP:
+            case KeyEvent.VK_W:
             player.block = true;
                 break;
 
-            case KeyEvent.VK_DOWN:
-            //case KeyEvent.VK_S:
+            //case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_S:
             player.atack = true;
                 break;
 
-            case KeyEvent.VK_LEFT:
-            //case KeyEvent.VK_A:
+            //case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_A:
             player.setX(player.getX() - player.getSpeed());
 
             if (player.getX() >= -10) {
@@ -294,8 +295,8 @@ public class GameFrame extends JPanel implements KeyListener {
                 player.setDirection(-1);
             }
 
-            case KeyEvent.VK_RIGHT:
-            //case KeyEvent.VK_D:
+            //case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_D:
             player.setX(player.getX() + player.getSpeed());
                 if (player.getX() <= 1385) {
                     player.setDirection(1);

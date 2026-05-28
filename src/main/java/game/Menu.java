@@ -65,11 +65,4 @@ public class Menu extends JFrame {
 
     }
 
-    public void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new Menu().setVisible(true);
-
-        });
-    }
-
 }

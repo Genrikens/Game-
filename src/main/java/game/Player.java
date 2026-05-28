@@ -48,8 +48,6 @@ public class Player {
 
 
     public void drawPlayer(Graphics g){
-
-
         int imgW = 32 * 3;
         int drawX = x;
         if (direction == -1) {
@@ -67,12 +65,7 @@ public class Player {
             g.drawImage(player_idle[index], drawX, y, imgW * direction, 32*3, null);
         }
 
-
         g.drawImage(frame, drawX, y, imgW * direction, 32*3, null);
-        //g.drawRect(x,y,w,h);
-        //g.drawRect(x-AtackP,y+50,100,50);
-
-
 
     }
 

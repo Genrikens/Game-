@@ -16,7 +16,7 @@ public class Enemy3 extends EnemyS {
     @Override
     public void Atack(Player player) {
         if (isCalision(player)) {
-            System.out.println(coldawnbAtack);
+            
             coldawnbAtack--;
             atack = true;
 

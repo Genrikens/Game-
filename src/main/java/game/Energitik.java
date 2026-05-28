@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Energitik {
     private static final Image energitik_anim = SpriteLoader.load("energitik.png");
-    private int HPregen = 1;
+
     private int x,y,w,h;
 
     public Energitik(int x,int y, int w, int h){

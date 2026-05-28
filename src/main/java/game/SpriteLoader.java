@@ -27,35 +27,6 @@ public class SpriteLoader {
     }
 
     /**
-     * Vyřízne a vrátí konkrétní snímek ze sprite sheetu (řady obrázků vedle sebe).
-     *
-     * @param path        Cesta ke sprite sheetu v resources
-     * @param frameWidth  Šířka jednoho snímku (px)
-     * @param frameHeight Výška jednoho snímku (px)
-     * @param frameCount  Počet snímků v jednom řádku
-     * @param index       Index snímku (0 = první)
-     * @return Obrázek (Image) obsahující vyříznutý snímek
-     */
-    public static Image getFrame(String path, int frameWidth, int frameHeight, int frameCount, int index) {
-        try {
-            BufferedImage sheet = ImageIO.read(
-                    Objects.requireNonNull(SpriteLoader.class.getResource(path))
-            );
-
-            if (index < 0 || index >= frameCount)
-                throw new IllegalArgumentException("Index snímku mimo rozsah: " + index);
-
-            int x = index * frameWidth;
-            int y = 0;
-
-            return sheet.getSubimage(x, y, frameWidth, frameHeight);
-
-        } catch (IOException e) {
-            throw new RuntimeException("Nelze načíst spritesheet: " + path, e);
-        }
-    }
-
-    /**
      * Načte celý sprite sheet a vrátí pole všech snímků v jednom řádku.
      *
      * @param path        Cesta ke sprite sheetu

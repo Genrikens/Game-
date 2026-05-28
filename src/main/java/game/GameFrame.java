@@ -264,6 +264,7 @@ public class GameFrame extends JPanel implements KeyListener {
 
     }
 
+
     @Override
     public void keyTyped(KeyEvent e) {}
 

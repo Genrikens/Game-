@@ -111,7 +111,6 @@ public class GameFrame extends JPanel implements KeyListener {
                         enemyS.Atack(player);
                     }
 
-
                     if (energitik != null && player.isCalisionEnergitik(energitik)) {
                     if (player.getHp() != 3) {
                         player.setHp(player.getHp() + 1);

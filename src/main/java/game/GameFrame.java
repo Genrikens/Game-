@@ -273,17 +273,17 @@ public class GameFrame extends JPanel implements KeyListener {
 
         int code = e.getKeyCode();
         switch (code) {
-            //case KeyEvent.VK_UP:
+            case KeyEvent.VK_UP:
             case KeyEvent.VK_W:
             player.block = true;
                 break;
 
-            //case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_DOWN:
             case KeyEvent.VK_S:
             player.atack = true;
                 break;
 
-            //case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_LEFT:
             case KeyEvent.VK_A:
             player.setX(player.getX() - player.getSpeed());
 
@@ -296,7 +296,7 @@ public class GameFrame extends JPanel implements KeyListener {
                 player.setDirection(-1);
             }
 
-            //case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_RIGHT:
             case KeyEvent.VK_D:
             player.setX(player.getX() + player.getSpeed());
                 if (player.getX() <= 1385) {
